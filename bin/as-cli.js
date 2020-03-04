@@ -6,7 +6,6 @@ const chalk = require('chalk');
 const commander = require('commander');
 const packageJson = require('../package.json');
 
-let usingRN = false;
 let usingYarn = false;
 let usingCache = false;
 let projectName = '';
@@ -18,9 +17,7 @@ const program = new commander.Command(packageJson.commandName)
     .usage('<project-name> [options]')
     .option('-c, --cache', 'using cache for dependencies', false)
     .option('-y, --with-yarn', 'installing dependencies with yarn', false)
-    .option('-r, --react-native', 'generating react-native project', false)
     .action((name, cmd) => {
-        usingRN = cmd['reactNative'];
         usingYarn = cmd['withYarn'];
         usingCache = cmd['cache'];
         projectName = name;
@@ -45,7 +42,7 @@ if (projectName === '') {
     );
     process.exit(1);
 } else {
-    run(projectName, usingRN, usingYarn, usingCache);
+    run(projectName, usingYarn, usingCache);
 }
 
 

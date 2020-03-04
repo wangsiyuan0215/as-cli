@@ -5,4 +5,5 @@ npm-*
 
 .idea
 .vscode
+.DS_Store
 test*

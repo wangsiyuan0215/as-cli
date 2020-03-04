@@ -1,7 +1,7 @@
 {
     "name": "@siyuan0215/as-cli",
     "commandName": "as-cli",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "angularjs staging cli, for generating scaffold with angularjs",
     "main": "./bin/index.js",
     "scripts": {
@@ -41,7 +41,7 @@
         "lib",
         "bin"
     ],
-    "templateRepo": "https://github.com/wangsiyuan0215/angualrjs-scaffold",
+    "templateRepo": "wangsiyuan0215/angualrjs-scaffold",
     "bin": {
         "as-cli": "./bin/as-cli.js"
     }

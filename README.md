@@ -1,6 +1,6 @@
-# RS-CLI
+# AS-CLI
 
-自动生成基于 react 和 umiJs 的前端控制台类单页面应用脚手架；
+自动生成基于 angular.js@1.5+ 的移动端 H5 单页面应用脚手架；
 
 ## 一、环境依赖
 
@@ -16,13 +16,13 @@
 
 ```
 # 若当前使用 Npm 进行包管理
-npm install @siyuan0215/rs-cli -g
+npm install @siyuan0215/as-cli -g
 
 # 若当前使用 Yarn 进行包管理
-yarn global add @siyuan0215/rs-cli
+yarn global add @siyuan0215/as-cli
 ```
 
-需要注意的是，不论使用哪种包管理工具，请以全局模式（`-g / global`）进行安装，以便于将 `rs-cli` 注入到系统环境随时使用。
+需要注意的是，不论使用哪种包管理工具，请以全局模式（`-g / global`）进行安装，以便于将 `as-cli` 注入到系统环境随时使用。
 
 ## 三、使用说明
 
@@ -34,7 +34,7 @@ yarn global add @siyuan0215/rs-cli
 
 ```bash
 # projectName is variable
-rs-cli <projectName> [options]
+as-cli <projectName>
 ```
 其中：
 *  `projectName` ：想要创建的项目的名称；
@@ -46,4 +46,3 @@ rs-cli <projectName> [options]
 | :--: | :----: | :--: | :---- |
 |- [x]|`-y, --with-yarn`|否|安装依赖时，使用 `yarn` 包管理器进行安装|
 |- [x]|`-c, --cache`|否|安装依赖时，禁止清除缓存|
-|- [ ]|`-r, --react-native`|否|构建 `react-native` 工程（feature，未上线）|

@@ -11,9 +11,7 @@ const io = require('./helpers/io');
 const version = require('./helpers/version');
 const download = require('./helpers/download');
 const invariant = require('./helpers/invariant');
-const rename4rn = require('./helpers/rn/rename');
 const install4js = require('./helpers/install');
-const install4pod = require('./helpers/rn/install');
 const handler4packageJson = require('./helpers/handler4package');
 
 const packageJson = require('../package.json');
@@ -22,23 +20,23 @@ const packageJson = require('../package.json');
  * 项目初始化任务运行
  * @method run
  */
-function run (name, usingRN = false, usingYarn = false, usingCache = false) {
+function run (name, usingYarn = false, usingCache = false) {
     console.log(`
     *************************************************************************
-    *             _____    _____            _____  _       _____            * 
-    *            |  __ \\  / ____|          / ____|| |     |_   _|           *
-    *            | |__) || (___   ______  | |     | |       | |             *
-    *            |  _  /  \\___ \\ |______| | |     | |       | |             *
-    *            | | \\ \\  ____) |         | |____ | |____  _| |_            *
-    *            |_|  \\_\\|_____/           \\_____||______||_____|           *
-    *                                                                       *
+
+              _|_|      _|_|_|                _|_|_|  _|        _|_|_|  
+            _|    _|  _|                    _|        _|          _|    
+            _|_|_|_|    _|_|    _|_|_|_|_|  _|        _|          _|    
+            _|    _|        _|              _|        _|          _|    
+            _|    _|  _|_|_|                  _|_|_|  _|_|_|_|  _|_|_|
+
     *************************************************************************`);
 
     io.print4skipped(`
-    Thanks for using rs-cli!\n
-    Scaffolding based on react, umiJs and surrounding ecology.
+    Thanks for using as-cli!\n
+    Scaffolding based on angular.js@1.5+ and surrounding ecology.
     Designed to simplify the build-up and release process deployment of the development environment.\n
-    If you have any questions, please issue: https://github.com/wangsiyuan0215/react-generator-cli/issues\n`);
+    If you have any questions, please issue: https://github.com/wangsiyuan0215/as-cli.git/issues\n`);
 
     // 检查当前 node 运行环境
     io.print4title(`Checking node environment and version...`);
@@ -53,23 +51,6 @@ function run (name, usingRN = false, usingYarn = false, usingCache = false) {
         version.checker('yarn', undefined, 'YARN', packageJson.engines.yarn, 'https://yarnpkg.com/lang/en/docs/install/#mac-stable');
     }
 
-    // if react-native cli does not exist,
-    // notify user that they should install react-native cli and environment
-    if (usingRN) {
-        io.print4title(`Checking react-native-cli environment and version...`);
-        version.checker('react-native', undefined, 'react-native-cli', false, 'https://reactnative.cn/docs/getting-started.html');
-
-        io.print4title(`Checking watchman environment and version...`);
-        version.checker('watchman', undefined, 'watchman', false, 'https://facebook.github.io/watchman/docs/install.html');
-
-        // TODO... java version checking
-        // io.print4title(`Checking Java Development Kit version...`);
-        // version.checker('javac', ['-version'], 'Java Development Kit', '>=1.8 || < 1.9', 'https://guides.cocoapods.org/using/getting-started.html#installation');
-
-        io.print4title(`Checking CocoaPods environment and version...`);
-        version.checker('pod', undefined, 'CocoaPods', false, 'https://guides.cocoapods.org/using/getting-started.html#installation');
-    }
-
     // 判断 projectName 是否合法
     invariant(/^[a-zA-Z0-9]*$/.test(name), 'your projectName %s is illegal, please typing correct projectName with number and words...', name);
 
@@ -77,7 +58,7 @@ function run (name, usingRN = false, usingYarn = false, usingCache = false) {
     const projectPath = path.resolve(process.cwd(), name);
 
     // 验证是否存在目录
-    io.print4title(`Checking ${name} folder...`);
+    io.print4title(`Checking if ${name} folder exists...`);
 
     const isExisted = fs.existsSync(projectPath);
 
@@ -99,8 +80,8 @@ function run (name, usingRN = false, usingYarn = false, usingCache = false) {
     io.print4skipped('  path:', projectPath);
 
     // 下载相应 Git 地址的模板
-    const loading = io.print4loading('Downloading');
-    download(packageJson.templateRepo[usingRN], projectPath, function (duration) {
+    const loading = io.print4loading('Downloading scaffold');
+    download(packageJson.templateRepo, projectPath, function (duration) {
         loading();
         io.print4skipped(`  🍺 Done in ${duration}s.`);
 
@@ -111,18 +92,7 @@ function run (name, usingRN = false, usingYarn = false, usingCache = false) {
         io.print4title(`Preparing to install dependencies by ${usingYarn ? 'yarn' : 'npm'}...`);
         install4js(projectPath, usingYarn, usingCache);
 
-        if (usingRN) {
-            // rename rn project
-            io.print4title(`Renaming current project to ${name}...`);
-            rename4rn(projectPath, name, usingYarn);
-
-            // 安装 iOS 的依赖
-            io.print4title('\nPreparing to install dependencies by CocoaPods...');
-            install4pod(projectPath);
-        }
-
-        io.print4title('\nAll dependencies has been installed, Please Enjoy it!\n');
-
+        io.print4title('\nAll dependencies has been installed, Please Enjoy it!');
     });
 
     // process.exit(0);

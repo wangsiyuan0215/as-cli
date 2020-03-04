@@ -34,7 +34,7 @@ const print4loading = (str, max = 6) => {
     }, 500);
 
     return () => {
-        slog(chalk.white.bgBlue.bold(`${str}......`), '\n\n');
+        slog(chalk.white.bgBlue.bold(`${str}!`), '\n\n');
         timer && clearInterval(timer);
     };
 };
